@@ -1,0 +1,14 @@
+{
+  "name": "chessrunhost",
+  "version": "1.0.0",
+  "description": "A host for the chessrun extension",
+  "main": "sendsplit.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "etopiei",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^7.2.5"
+  }
+}

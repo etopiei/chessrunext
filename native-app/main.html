@@ -4,19 +4,19 @@
 	<h1>ChessRun</h1>
 	<div class="select-container">
 		<select id="site">
-			<option>lichess</option>
 			<option>chess.com</option>
+			<option>lichess</option>
 		</select>
 	</div>
 	<div class="select-container">
 		<select id="gametype">
 			<option>Bullet</option>
 			<option>Blitz</option>
-			<option>Rapid</option>
 			<option>Puzzles</option>
 		</select>	
 	</div>
 	<div id="rating-slider"></div>
+	<p id="display">1500 - 2500</p>
 	<button id="make-splits">Generate Splits File</button>
 	<h2>Connection Status</h2>
 	<p id="connection">
@@ -26,8 +26,8 @@
 
 <script>
 	// Initialise globals
-	let site = "lichess";
-	let runtype = "Blitz";
+	let site = "chess.com";
+	let runtype = "Bullet";
 	let mini = 1500;
 	let maxi = 2500;
 	// Set Up Rating Sliders
@@ -48,9 +48,10 @@
 		}
 	});
 
-	slider.noUiSlider.on("change", (values) => {
+	slider.noUiSlider.on("update", (values) => {
 		mini = values[0];
 		maxi = values[1];
+		document.getElementById("display").innerText = `${mini} - ${maxi}`;
 	});
 
 	document.getElementById("gametype").addEventListener("change", (e) => {
@@ -66,7 +67,6 @@
 
 	// Here is where we need to start the websocket server.
 	const WebSocket = require('ws');
-
 	const wss = new WebSocket.Server({ port: 8055 });
 
 	// Evenutally i aim to make a nice app to configure this all,
@@ -90,15 +90,16 @@
 		sockets.push(socket);
 
 		socket.onmessage = (ev) => {
-			if (ev.data.name && ev.data.name == "ext") {
+			let message = JSON.parse(ev.data);
+			if (message.name && message.name == "ext") {
 				// Set the indexes correctly (even for future)
-				let webext = index;
-				let liveview = webext == 0 ? 1 : 0;
+				webext = index;
+				liveview = webext == 0 ? 1 : 0;
 				if (sockets.length == 1) {
-					connectionEl.innerText("Browser Extension Connected - Waiting for Live View");
+					connectionEl.innerText = "Browser Extension Connected - Waiting for Live View";
 				}
 			} else {
-				// Okay, after this point liveviewsocket and webextsocket should be set correctly
+				// It is a message, most likely a rating update string
 				if (socket == sockets[webext]) {
 					console.log("Sending update to liveview");
 					ratingUpdate(ev.data, sockets[liveview]);
@@ -106,6 +107,11 @@
 					console.log("Message from liveview?")
 				}
 			}
+		};
+
+		socket.onclose = (ev) => {
+			console.log("Disconnected")
+			sockets.splice(index, 1);
 		};
 	});
 
@@ -170,6 +176,13 @@ html {
 .noUi-connect {
 	background-color: #fb6a6a;
 }
+.noUi-tooltip {
+    display: none;
+}
+.noUi-active .noUi-tooltip {
+    display: block;
+}
+
 #make-splits {
 	padding: 12px;
 }

@@ -10,7 +10,6 @@ const initWebSocket = () => {
         // We have connection to host app
         console.log("Connected");
         ws.send(JSON.stringify({name: "ext"})); // tell the server we are the browser extension.
-        // and then tell the popup we are connected.
         setConnectedStatus("Connected");
     }
 

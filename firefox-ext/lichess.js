@@ -1,17 +1,15 @@
 class LiChess {
 
     constructor() {
-        console.log("LiChess loaded");
         this.gameType = this.getGameType();
     }
 
     getGameType() {
-        console.log("Getting LiChess Game Type");
         // First check if it's a puzzle - then check for actual game
         if (window.location.pathname.indexOf("training") > -1) {
             return "Puzzle";
         }
-        let supportedGameTypes = ["Bullet", "Blitz", "Rapid"];
+        let supportedGameTypes = ["Bullet", "Blitz"];
         let setupBox = document.getElementsByClassName("setup")[0];
         let gameTypeSpans = Object.values(setupBox.getElementsByTagName("span"));
         for (let gameInd in gameTypeSpans) {
@@ -24,10 +22,22 @@ class LiChess {
         return null;
     }
 
+    checkPuzzleRating() {
+        let els = document.getElementsByClassName("puzzle__side__user");
+        if (els && els.length > 0) {
+            let rating = els[0].getElementsByTagName("strong")[0].innerText.split(" ")[0];
+            this.ratingUpdate(rating);
+        }
+    }
+
     startPolling() {
-        console.log("Prepare polling");
-        if (this.gameType) {
-            // TODO: Make this work for puzzles too
+        window.setInterval(this.checkRating.bind(this), 500);
+    }
+
+    checkRating() {
+        if (this.gameType && this.gameType == "Puzzle") {
+            this.checkPuzzleRating();
+        } else if (this.gameType) {
             let username = document.getElementById("user_tag").innerText;
             let rating_displays = Object.values(document.getElementsByClassName("user-link"));
             rating_displays.forEach(r => {

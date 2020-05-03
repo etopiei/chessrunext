@@ -5,12 +5,6 @@ browser.runtime.onMessage.addListener((msg) => {
 	console.log("Message received from pop-up", msg);
 	if (msg.connect) {
 		browser.runtime.sendMessage({connect: true});
-	} else if (msg.query) {
-		// Return the current state of connection for the web socket
-		browser.runtime.sendMessage({query: true});
-	} else if (msg.result) {
-		// This is a message from the background, most likely with the state of the 
-		// ws connection
 	}
 });
 

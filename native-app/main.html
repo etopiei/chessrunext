@@ -19,6 +19,13 @@
 				<option>Puzzles</option>
 			</select>	
 		</div>
+		<span>Extra: </span><div class="select-container">
+			<select id="extra">
+				<option value="">None</option>
+				<option value=" Sac Queen">Sac Queen</option>
+				<option value=" Bong Cloud">Bong Cloud</option>
+			</select>	
+		</div>
 		<div id="rating-slider"></div>
 		<p id="display">1500 - 2500</p>
 		<button id="make-splits">Generate Splits File</button>
@@ -33,6 +40,7 @@
 	// Initialise globals
 	let site = "chess.com";
 	let runtype = "Bullet";
+	let extra = "";
 	let mini = 1500;
 	let maxi = 2500;
 	// Set Up Rating Sliders
@@ -65,6 +73,10 @@
 
 	document.getElementById("site").addEventListener("change", (e) => {
 		site = e.target.value;
+	});
+
+	document.getElementById("extra").addEventListener("change", (e) => {
+		extra = e.target.value;
 	});
 
 	// Use this to update connection info when stuff happens.
@@ -150,7 +162,7 @@
 	};
 
 	document.getElementById("make-splits").addEventListener('click', () => {
-		let category = `${site} ${runtype} ${mini}-${maxi}`;
+		let category = `${site} ${runtype} ${mini}-${maxi}${extra}`;
 		let result = `<?xml version="1.0" encoding="UTF-8"?><Run version="1.8.0"><GameIcon /><GameName>Chess</GameName><CategoryName>${category}</CategoryName><Metadata><Run id="" /><Platform usesEmulator="False" /><Region /><SpeedrunComVariables /><CustomVariables /></Metadata><Offset>00:00:00.0000000</Offset><AttemptCount>0</AttemptCount><AttemptHistory /><Segments>`;
 		for (let i = mini; i < maxi; i+= 100) {
 			result += `<Segment><Name>${i}</Name><Icon /><SplitTimes><SplitTime name="Personal Best" /></SplitTimes><BestSegmentTime /><SegmentHistory /></Segment>`;

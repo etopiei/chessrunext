@@ -43,6 +43,8 @@
 	let extra = "";
 	let mini = 1500;
 	let maxi = 2500;
+	let checkpoints = [1500, 1550, 1600, 1650, 1700, 1750, 1800, 1850, 1900, 1950, 2000, 2100, 2200, 2300, 2400, 2500];
+
 	// Set Up Rating Sliders
 	let slider = document.getElementById("rating-slider");
 	noUiSlider.create(slider, {
@@ -64,6 +66,13 @@
 	slider.noUiSlider.on("update", (values) => {
 		mini = values[0];
 		maxi = values[1];
+		// Also update checkpoints here
+		let newCheckpoints = [];
+		for (let i = mini; i <= maxi; i+=100) {
+			newCheckpoints.push(i);
+		}
+		checkpoints = newCheckpoints;
+		console.log(checkpoints);
 		document.getElementById("display").innerText = `${mini} - ${maxi}`;
 	});
 
@@ -88,7 +97,6 @@
 
 	// Evenutally i aim to make a nice app to configure this all,
 	// But to start, I am just going to setup a default speedrun from 1500->2500
-	let checkpoints = [1500, 1550, 1600, 1650, 1700, 1750, 1800, 1850, 1900, 1950, 2000];
 	let index = -1;
 	let sockets = [];
 	let webext = null;

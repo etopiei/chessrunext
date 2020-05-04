@@ -1,27 +1,32 @@
 <html>
-	<script src="nouislider.min.js"></script>
-	<link rel="Stylesheet" media="screen" type="text/css" href="nouislider.min.css">
-	<h1>ChessRun</h1>
-	<div class="select-container">
-		<select id="site">
-			<option>chess.com</option>
-			<option>lichess</option>
-		</select>
-	</div>
-	<div class="select-container">
-		<select id="gametype">
-			<option>Bullet</option>
-			<option>Blitz</option>
-			<option>Puzzles</option>
-		</select>	
-	</div>
-	<div id="rating-slider"></div>
-	<p id="display">1500 - 2500</p>
-	<button id="make-splits">Generate Splits File</button>
-	<h2>Connection Status</h2>
-	<p id="connection">
-		Waiting for Connection
-	</p>
+	<head>
+		<script src="nouislider.min.js"></script>
+		<link rel="Stylesheet" media="screen" type="text/css" href="nouislider.min.css">
+		<title>ChessRun</title>
+	</head>
+	<body>
+		<h1>ChessRun</h1>
+		<div class="select-container">
+			<select id="site">
+				<option>chess.com</option>
+				<option>lichess</option>
+			</select>
+		</div>
+		<div class="select-container">
+			<select id="gametype">
+				<option>Bullet</option>
+				<option>Blitz</option>
+				<option>Puzzles</option>
+			</select>	
+		</div>
+		<div id="rating-slider"></div>
+		<p id="display">1500 - 2500</p>
+		<button id="make-splits">Generate Splits File</button>
+		<h2>Connection Status</h2>
+		<p id="connection">
+			Waiting for Connection
+		</p>
+	</body>
 </html>
 
 <script>
@@ -110,6 +115,13 @@
 		};
 
 		socket.onclose = (ev) => {
+			if (index == webext) {
+				connectionEl.innerText = "LiveView Connected - Waiting for Browser Extension";
+				webext = null;
+			} else {
+				connectionEl.innerText = "Browser Extension Connected - Waiting for Live View";
+				liveview = null;
+			}
 			console.log("Disconnected")
 			sockets.splice(index, 1);
 		};

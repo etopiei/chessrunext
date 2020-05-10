@@ -1,6 +1,7 @@
 <main>
 	<h1>ChessRun</h1>
 	<p>A tool for speed-running chess.</p>
+	<a href="https://leaderboard.chessrun.net"><button>Go To Leaderboard</button></a>
 	<h3>How to Use</h3>
 	<video src="instruction.mp4"></video>
 	<p>

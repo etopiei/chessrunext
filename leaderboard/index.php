@@ -3,7 +3,7 @@
 		<link rel="Stylesheet" href="main.css" type="text/css" media="screen">
 	</head>
 	<body>
-		<h1>Leaderboard</h1>
+		<h1>ChessRun Leaderboard</h1>
 		<?php
 			// So here we want to display a leaderboard grabbed from the database
 			// I'm thinking we dump all the categories here now, and then let CSS and JS determine what to show.

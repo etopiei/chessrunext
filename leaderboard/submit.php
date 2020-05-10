@@ -2,7 +2,19 @@
     // First decide if we are having a run posted, otherwise display the form to submit a new run
     if (isset($_POST["time"])) {
         $time = $_POST["time"];
-        $time_in_s = strtotime($time) - strtotime('TODAY');
+        $time_in_s = 0;
+        $parts = explode(":", $time);
+        for ($i = 0; $i < sizeof($parts); $i++) {
+            if ($i == 0) {
+                $time_in_s += 86400 * intval($parts[$i], 10);
+            } else  if ($i == 1)  {
+                $time_in_s += 3600 * intval($parts[$i], 10);
+            } else if ($i == 2) {
+                $time_in_s += 60 * intval($parts[$i], 10);
+            } else {
+                $time_in_s += intval($parts[$i], 10);
+            }
+        }
         $category = $_POST["category"];
         $link = $_POST["link"];
         $username = $_POST["username"];
@@ -56,7 +68,7 @@
                     <option value="14">Bongcloud Blitz - Chess.com: 1500-2500</option>
                 </select>
             </div><br>
-            <span>Time (hh:mm:ss)</span><input type="text" placeholder="hh:mm:ss" name="time"><br>
+            <span>Time (dd:hh:mm:ss)</span><input type="text" placeholder="dd:hh:mm:ss" name="time"><br>
             <span>Link</span><input type="text" placeholder="Link to Video" name="link"><br>
             <input type="submit" value="Submit">
         </form>

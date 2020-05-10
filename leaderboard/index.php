@@ -36,7 +36,7 @@
 						<thead>
 							<tr>
 								<th>Username</th>
-								<th>Time (hh:mm:ss)</th>
+								<th>Time (dd:hh:mm:ss)</th>
 								<th>Link</th>
 							</tr>
 						</thead>
@@ -48,7 +48,9 @@
 						$count = 0;
 						foreach(array_slice($row, 0, 3) as $r) {
 							if ($count == 1) {
-								echo "<td>" . gmdate("H:i:s", $r) . "</td>";
+								$dtF = date_create('@0');
+								$dtT = date_create("@$r");
+								echo "<td>" . $dtF->diff($dtT)->format('%D:%H:%I:%S') . "</td>";
 							} else if ($count == 2) {
 								echo "<td><a href='" . $r . "'>Click to Watch Run<a/></td>";
 							} else {

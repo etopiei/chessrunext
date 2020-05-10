@@ -42,7 +42,7 @@
             <li>Run must contain video proof (provide a link in the form below)</li>
             <li>Category must be set</li>
             <li>Username must match site that the speedrun was done on</li>
-            <li>Runs will not be shown on the leaderboard, until approved my a moderator</li>
+            <li>Runs will not be shown on the leaderboard, until approved by a moderator</li>
         </ul>
         <form method="post">
             <span>Username:</span><input type="text" placeholder="Username" name="username"><br>

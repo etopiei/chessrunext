@@ -16,7 +16,7 @@
 	"content_scripts": [
 		{
 			"matches": ["http://*/*", "https://*/*"],
-			"js": ["lichess.js", "chess.com.js", "chessrun.js"]
+			"js": ["browser-polyfill.js", "lichess.js", "chess.com.js", "chessrun.js"]
 		}
 	],
 
@@ -33,6 +33,7 @@
 	},
 	
 	"web_accessible_resources": [
+		"popup/browser-polyfill.js",
 		"popup/main.js"
 	]
 }

@@ -20,7 +20,7 @@ const initWebSocket = () => {
     }
 };
 
-const dataReceived = (data) => {
+browser.runtime.onMessage.addListener(async (data, sender, sendResponse) => {
     console.log("Background recieved", data);
     if (data.connect) {
         // we have receieved a command to connect to the ws
@@ -29,5 +29,6 @@ const dataReceived = (data) => {
         // if web socket is open, send the data to the running app.
         ws.send(data);
     }
-};
-browser.runtime.onMessage.addListener(dataReceived);
+    sendResponse("All Good");
+    return false;
+});

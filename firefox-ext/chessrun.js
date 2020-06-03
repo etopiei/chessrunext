@@ -1,11 +1,13 @@
 let chess = null;
 
-browser.runtime.onMessage.addListener((msg) => {
+browser.runtime.onMessage.addListener((msg, sender, sendReponse) => {
 	// This is a message from the popup UI to start web socket.
 	console.log("Message received from pop-up", msg);
 	if (msg.connect) {
 		browser.runtime.sendMessage({connect: true});
 	}
+    sendResponse("All Good");
+    return false;
 });
 
 // Check if we can get a good host from the current site.

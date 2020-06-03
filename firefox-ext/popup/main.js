@@ -2,7 +2,9 @@ let connectButton = document.getElementById("websocket-connect");
 connectButton.addEventListener('click', () => {
     // Send a request to connect to native app
     browser.tabs.query({active: true, currentWindow: true}).then((tabs, error) => {
-        browser.tabs.sendMessage(tabs[0].id, {connect: true});
+        browser.tabs.sendMessage(tabs[0].id, {connect: true}).then((d, err) => {
+            console.log("Things happened");
+        });
     }).catch(err => {
         console.log(err);
     });

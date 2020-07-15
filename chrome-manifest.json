@@ -5,12 +5,12 @@
 	"description": "A tool to help speed runnning chess",
 
 	"icons": {
-		"48": "icons/main.svg"
+		"128": "icon.png"
 	},
 
 	"content_scripts": [
 		{
-			"matches": ["http://*/*", "https://*/*"],
+			"matches": ["https://lichess.org/*", "https://chess.com/*"],
 			"js": ["browser-polyfill.js", "lichess.js", "chess.com.js", "chessrun.js"]
 		}
 	],
